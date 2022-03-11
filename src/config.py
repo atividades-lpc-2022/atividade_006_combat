@@ -10,7 +10,9 @@ class Config:
 
     SPRITES_PATH = {
         # Put all paths of sprites here. Default path `src/sprites/<SPRITE_NAME>.png`
-        "SPRITE_NAME": "src/sprites/example.png"
+        "SPRITE_NAME": "src/sprites/example.png",
+        "PLAYER_1": "src/sprites/player_1.png",
+        "PLAYER_2": "src/sprites/player_2.png"
     }
 
     SOUNDS_PATH = {
@@ -19,5 +21,10 @@ class Config:
     }
 
     COLORS = {
-        "BLACK": Color(0,0,0)
+        "BLACK": Color(0,0,0),
+        "WHITE": Color(255, 255, 255),
+        "RED": Color(255, 0, 0),
+        "T_ORANGE": Color(239, 154, 81),
+        "T_GREEN": Color(168, 182, 73)
+
     }

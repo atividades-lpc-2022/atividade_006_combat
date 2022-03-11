@@ -1,10 +1,11 @@
 import pygame
-from config import Config
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
 from modules.Score import Score
-from modules.Screen import Screen
 from modules.Tank import Tank
+from modules.Screen import Screen
+from modules.Boundaries import *
+from config import Config
 
 
 class Game:
@@ -21,19 +22,41 @@ class Game:
         self.player_2_score.reset()
 
     def use_global_events(self):  # TODO: Set global events (exit the game, ...)
-        print("Setting global events")
+
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.is_running = False
 
     def play(
         self,
     ):  # TODO: Implement game loop (draw all elements (Screen, HUD, Tanks, Bricks))
+
+        # Initializze pygame inside game loop
         pygame.init()
-        
-        clock = pygame.time.Clock()
+
+        # Create screen
         screen = Screen(Dimension(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT))
-        
-        while self.is_running: # Game loop
-            
+        pygame.display.set_caption("TANK PONG")
+        clock = pygame.time.Clock()
+
+        # Players
+        tank_1 = Tank(Coordinate(100, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_1"]))
+        tank_2 = Tank(Coordinate(700, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_2"]))
+
+
+        while self.is_running:
+
+            self.use_global_events()
+
             screen.draw()
 
+            tank_1.draw(screen)
+            tank_2.draw(screen)
+
+            bound(screen.surface, color=(Config.COLORS["T_ORANGE"]))
+
             pygame.display.update()
+            
             clock.tick(60)
+
+        print("Game is not running!")
