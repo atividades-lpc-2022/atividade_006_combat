@@ -1,4 +1,4 @@
 class Dimension:
-    def __init__(self, width: float, height: float):
+    def __init__(self, width: int, height: int):
         self.width = width
         self.height = height

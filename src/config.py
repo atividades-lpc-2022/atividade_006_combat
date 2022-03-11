@@ -1,3 +1,6 @@
+from pygame import Color
+
+
 class Config:
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 600
@@ -13,4 +16,8 @@ class Config:
     SOUNDS_PATH = {
         # Put all paths of sounds here. Default path `src/sounds/<SOUND_NAME>.wav`
         "SOUND_NAME": "src/sounds/example.wav"
+    }
+
+    COLORS = {
+        "BLACK": Color(0,0,0)
     }

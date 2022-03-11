@@ -1,5 +1,9 @@
+import pygame
+from config import Config
 from modules.Coordinate import Coordinate
+from modules.Dimension import Dimension
 from modules.Score import Score
+from modules.Screen import Screen
 from modules.Tank import Tank
 
 
@@ -22,6 +26,14 @@ class Game:
     def play(
         self,
     ):  # TODO: Implement game loop (draw all elements (Screen, HUD, Tanks, Bricks))
-        while self.is_running:
-            print("Game is running!")
-        print("Game is not running!")
+        pygame.init()
+        
+        clock = pygame.time.Clock()
+        screen = Screen(Dimension(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT))
+        
+        while self.is_running: # Game loop
+            
+            screen.draw()
+
+            pygame.display.update()
+            clock.tick(60)
