@@ -14,8 +14,10 @@ class Tank(pygame.sprite.Sprite):
         self.velocity = 1.0  # Default tank velocity
         self.angle = 0  # Default tank angle
 
-    def rotate(self, new_angle: float):  # Set a new angle
-        self.angle = new_angle
+    def rotate(self, new_angle: float):  # Set a new angle 
+        self.image = pygame.transform.rotate(self.image, new_angle)
+        rot_rect = self.image.get_rect(center=(self.rect.center))
+        
 
     def use_controls(self):  # TODO: Define tank controls
         print("Setting tank controls...")

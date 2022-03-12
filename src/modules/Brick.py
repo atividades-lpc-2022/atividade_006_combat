@@ -5,11 +5,13 @@ from modules.Screen import Screen
 
 
 class Brick:
-    def __init__(self, coordinate: Coordinate, dimension: Dimension):
+    def __init__(self, coordinate: Coordinate, dimension: Dimension, color: tuple):
         self.coordinate = coordinate
-        self.rect = pygame.Rect(
-            coordinate.x, coordinate.y, dimension.width, dimension.height
-        )
+        self.dimension = dimension
+        self.image = pygame.Surface((self.dimension.width, self.dimension.height))
+        self.rect = self.image.get_rect()
+        self.image.fill(color)
 
     def draw(self, screen: Screen):
-        pygame.draw.rect(screen.surface, (0, 0, 0), self.rect)
+        self.rect.center = (self.coordinate.x, self.coordinate.y)
+        screen.surface.blit(self.image, self.rect)

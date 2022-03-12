@@ -1,4 +1,5 @@
 import pygame
+from modules.Brick import Brick
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
 from modules.HUD import HUD
@@ -6,6 +7,7 @@ from modules.Score import Score
 from modules.Tank import Tank
 from modules.Screen import Screen
 from modules.Boundaries import *
+from modules.Ball import Ball
 from config import Config
 
 
@@ -40,16 +42,34 @@ class Game:
         pygame.display.set_caption("TANK PONG")
         clock = pygame.time.Clock()
 
+        # Ball
+        # ball_1 = Ball(Coordinate(300,300), Config.COLORS["BLACK"])
+
         # Players
         tank_1 = Tank(
-            Coordinate(100, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_1"])
-        )
+            Coordinate(70, 325), sprite_path=(Config.SPRITES_PATH["PLAYER_1"])
+            )
         tank_2 = Tank(
-            Coordinate(700, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_2"])
+            Coordinate(730, 325), sprite_path=(Config.SPRITES_PATH["PLAYER_2"])
         )
 
         # HUD
         hud = HUD()
+        
+
+        # Bricks
+        brick_center_1 = Brick(Coordinate(400, 180), Dimension(35, 80), Config.COLORS["T_ORANGE"])
+        brick_center_2 = Brick(Coordinate(400, 475), Dimension(35, 80), Config.COLORS["T_ORANGE"])
+        brick_center_3 = Brick(Coordinate(230, 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
+        brick_center_4 = Brick(Coordinate(570, 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
+
+        brick_left_1 = Brick(Coordinate(120, 325), Dimension(17, 110), Config.COLORS["T_ORANGE"])
+        brick_left_2 = Brick(Coordinate(103, 278), Dimension(17, 17), Config.COLORS["T_ORANGE"])
+        brick_left_3 = Brick(Coordinate(103, 371), Dimension(17, 17), Config.COLORS["T_ORANGE"])
+
+        brick_right_1 = Brick(Coordinate(680, 325), Dimension(17, 110), Config.COLORS["T_ORANGE"])
+        brick_right_2 = Brick(Coordinate(697, 278), Dimension(17, 17), Config.COLORS["T_ORANGE"])
+        brick_right_3 = Brick(Coordinate(697, 371), Dimension(17, 17), Config.COLORS["T_ORANGE"])
 
         while self.is_running:
             self.use_global_events()
@@ -57,6 +77,7 @@ class Game:
             screen.draw()
             tank_1.draw(screen)
             tank_2.draw(screen)
+
             hud.draw(
                 screen,
                 self.player_1_score,
@@ -64,7 +85,29 @@ class Game:
                 Config.COLORS["RED"],
                 Config.COLORS["BLUE"],
             )
+
+            brick_center_1.draw(screen)
+            brick_center_2.draw(screen)
+            brick_center_3.draw(screen)
+            brick_center_4.draw(screen)
+
+            brick_left_1.draw(screen)
+            brick_left_2.draw(screen)
+            brick_left_3.draw(screen)
+
+            brick_right_1.draw(screen)
+            brick_right_2.draw(screen)
+            brick_right_3.draw(screen)
+
             bound(screen.surface, color=(Config.COLORS["T_ORANGE"]))
+
+            # Rotations
+            keys = pygame.key.get_pressed()
+
+
+                
+
+            
 
             pygame.display.update()
             clock.tick(60)

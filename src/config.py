@@ -28,5 +28,5 @@ class Config:
         "RED": Color(255, 0, 0),
         "BLUE": Color(0, 0, 255),
         "T_ORANGE": Color(239, 154, 81),
-        "T_GREEN": Color(168, 182, 73),
+        "T_GREEN": Color(140, 150, 64),
     }
