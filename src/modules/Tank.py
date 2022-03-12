@@ -25,4 +25,3 @@ class Tank(pygame.sprite.Sprite):
         self.rect.center = (self.coordinate.x, self.coordinate.y)
         self.use_controls()
         screen.surface.blit(self.image, self.rect)
-        print("Drawing a tank!")
