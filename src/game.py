@@ -25,8 +25,8 @@ class Game:
     def use_global_events(self):  # TODO: Set global events (exit the game, ...)
 
         for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.is_running = False
+            if event.type == pygame.QUIT:
+                self.is_running = False
 
     def play(
         self,
@@ -41,8 +41,12 @@ class Game:
         clock = pygame.time.Clock()
 
         # Players
-        tank_1 = Tank(Coordinate(100, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_1"]))
-        tank_2 = Tank(Coordinate(700, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_2"]))
+        tank_1 = Tank(
+            Coordinate(100, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_1"])
+        )
+        tank_2 = Tank(
+            Coordinate(700, 300), sprite_path=(Config.SPRITES_PATH["PLAYER_2"])
+        )
 
         # HUD
         hud = HUD()
@@ -53,8 +57,14 @@ class Game:
             screen.draw()
             tank_1.draw(screen)
             tank_2.draw(screen)
-            hud.draw(screen, self.player_1_score, self.player_2_score, Config.COLORS["RED"], Config.COLORS["BLUE"])
+            hud.draw(
+                screen,
+                self.player_1_score,
+                self.player_2_score,
+                Config.COLORS["RED"],
+                Config.COLORS["BLUE"],
+            )
             bound(screen.surface, color=(Config.COLORS["T_ORANGE"]))
-            
-            pygame.display.update()            
+
+            pygame.display.update()
             clock.tick(60)

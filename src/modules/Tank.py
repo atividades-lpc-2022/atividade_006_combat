@@ -4,7 +4,6 @@ from modules.Screen import Screen
 
 
 class Tank(pygame.sprite.Sprite):
-
     def __init__(self, coordinate: Coordinate, sprite_path: str):
 
         super(Tank, self).__init__()
