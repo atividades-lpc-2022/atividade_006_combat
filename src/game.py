@@ -102,6 +102,7 @@ class Game:
             bound(screen.surface, color=(Config.COLORS["T_ORANGE"]))
 
             # Rotations
+            # Tank 1's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_w]:
                 tank_1.coordinate.y -= 1.0
@@ -110,6 +111,7 @@ class Game:
             if keys[pygame.K_d]:
                 tank_1.coordinate.x += 1
 
+            # Tank 2's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
                 tank_2.coordinate.y -= 1.0
