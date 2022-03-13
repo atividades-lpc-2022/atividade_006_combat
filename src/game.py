@@ -103,6 +103,20 @@ class Game:
 
             # Rotations
             keys = pygame.key.get_pressed()
+            if keys[pygame.K_w]:
+                tank_1.coordinate.y -= 1.0
+            if keys[pygame.K_a]:
+                tank_1.coordinate.y -= 1.0 - 2.0
+            if keys[pygame.K_d]:
+                tank_1.coordinate.x += 1
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_UP]:
+                tank_2.coordinate.y -= 1.0
+            if keys[pygame.K_DOWN]:
+                tank_2.coordinate.y -= 1.0 - 2.0
+            if keys[pygame.K_LEFT]:
+                tank_2.coordinate.x -= 1
 
 
                 
