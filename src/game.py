@@ -50,25 +50,25 @@ class Game:
         balls: Sequence[Ball] = []
 
         # Players
-        tank_1 = Tank(Coordinate(70, 325), Config.SPRITES_PATH["PLAYER_1"], 1)
-        tank_2 = Tank(Coordinate(730, 325), Config.SPRITES_PATH["PLAYER_2"], 2)
+        tank_1 = Tank(Coordinate(Config.SCREEN_WIDTH * (0.1), 320), Config.SPRITES_PATH["PLAYER_1"], 1)
+        tank_2 = Tank(Coordinate(Config.SCREEN_WIDTH * (0.9), 320), Config.SPRITES_PATH["PLAYER_2"], 2)
 
         # HUD
         hud = HUD()
         
         # Bricks
-        brick_center_1 = Brick(Coordinate(400, 180), Dimension(35, 80), Config.COLORS["T_ORANGE"])
-        brick_center_2 = Brick(Coordinate(400, 475), Dimension(35, 80), Config.COLORS["T_ORANGE"])
-        brick_center_3 = Brick(Coordinate(230, 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
-        brick_center_4 = Brick(Coordinate(570, 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
+        brick_center_1 = Brick(Coordinate(Config.SCREEN_WIDTH / 2 - 17.5, 180), Dimension(35, 80), Config.COLORS["T_ORANGE"])
+        brick_center_2 = Brick(Coordinate(Config.SCREEN_WIDTH / 2 - 17.5, 425), Dimension(35, 80), Config.COLORS["T_ORANGE"])
+        brick_center_3 = Brick(Coordinate(Config.SCREEN_WIDTH * (0.4) - 80, 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
+        brick_center_4 = Brick(Coordinate(Config.SCREEN_WIDTH * (0.6), 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
 
-        brick_left_1 = Brick(Coordinate(120, 325), Dimension(17, 110), Config.COLORS["T_ORANGE"])
-        brick_left_2 = Brick(Coordinate(103, 278), Dimension(17, 17), Config.COLORS["T_ORANGE"])
-        brick_left_3 = Brick(Coordinate(103, 371), Dimension(17, 17), Config.COLORS["T_ORANGE"])
+        brick_left_1 = Brick(Coordinate(120, 270), Dimension(17, 110), Config.COLORS["T_ORANGE"])
+        brick_left_2 = Brick(Coordinate(103, 253), Dimension(34, 17), Config.COLORS["T_ORANGE"])
+        brick_left_3 = Brick(Coordinate(103, 380), Dimension(34, 17), Config.COLORS["T_ORANGE"])
 
-        brick_right_1 = Brick(Coordinate(680, 325), Dimension(17, 110), Config.COLORS["T_ORANGE"])
-        brick_right_2 = Brick(Coordinate(697, 278), Dimension(17, 17), Config.COLORS["T_ORANGE"])
-        brick_right_3 = Brick(Coordinate(697, 371), Dimension(17, 17), Config.COLORS["T_ORANGE"])
+        brick_right_1 = Brick(Coordinate(680, 270), Dimension(17, 110), Config.COLORS["T_ORANGE"])
+        brick_right_2 = Brick(Coordinate(680, 253), Dimension(34, 17), Config.COLORS["T_ORANGE"])
+        brick_right_3 = Brick(Coordinate(680, 380), Dimension(34, 17), Config.COLORS["T_ORANGE"])
 
         while self.is_running:
             self.use_global_events()
@@ -89,13 +89,13 @@ class Game:
                 if ball.hits == Config.MAX_BALL_HITS:
                     balls.remove(ball)
 
-                if ball.tank_colision(tank_2.coordinate, tank_2.dimension):
+                if ball.is_colliding(tank_2.coordinate, tank_2.dimension):
                     if ball.player == 1:
                         self.player_1_score.increment()
                         balls.remove(ball)
                         tank_2.change_position()
 
-                if ball.tank_colision(tank_1.coordinate, tank_1.dimension):
+                if ball.is_colliding(tank_1.coordinate, tank_1.dimension):
                     if ball.player == 2:
                         self.player_2_score.increment()
                         balls.remove(ball)
@@ -121,16 +121,30 @@ class Game:
             # Tank 1's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_w]:
-                tank_1.move_up()
-                if tank_1.coordinate.y >= 550:
-                    tank_1.coordinate.y = 550 - 20
-                if tank_1.coordinate.y <= 75:
-                    tank_1.coordinate.y = 75 + 20
+                if (tank_1.is_colliding(brick_left_1.coordinate, brick_left_1.dimension) 
+                    or tank_1.is_colliding(brick_left_2.coordinate, brick_left_2.dimension) 
+                    or tank_1.is_colliding(brick_left_3.coordinate, brick_left_3.dimension)
+                    or tank_1.is_colliding(brick_right_1.coordinate, brick_right_1.dimension)
+                    or tank_1.is_colliding(brick_right_2.coordinate, brick_right_2.dimension)
+                    or tank_1.is_colliding(brick_right_3.coordinate, brick_right_3.dimension)
+                    or tank_1.is_colliding(brick_center_1.coordinate, brick_center_1.dimension)
+                    or tank_1.is_colliding(brick_center_2.coordinate, brick_center_2.dimension)
+                    or tank_1.is_colliding(brick_center_3.coordinate, brick_center_3.dimension)
+                    or tank_1.is_colliding(brick_center_4.coordinate, brick_center_4.dimension)
+                ):
+                    tank_1.coordinate.x -= 1.1
+                    tank_1.coordinate.y -= 1.1
+                else:
+                    tank_1.move_up()
+                    if tank_1.coordinate.y >= 550:
+                        tank_1.coordinate.y = 550 - 20
+                    if tank_1.coordinate.y <= 75:
+                        tank_1.coordinate.y = 75 + 20
 
-                if tank_1.coordinate.x <= 20:
-                    tank_1.coordinate.x = 20 + 20
-                if tank_1.coordinate.x >= 750:
-                    tank_1.coordinate.x = 750 - 20
+                    if tank_1.coordinate.x <= 20:
+                        tank_1.coordinate.x = 20 + 20
+                    if tank_1.coordinate.x >= 750:
+                        tank_1.coordinate.x = 750 - 20
 
             if keys[pygame.K_a]:
                 tank_1.rotate(45)
@@ -152,16 +166,30 @@ class Game:
             # Tank 2's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
-                tank_2.move_up()
-                if tank_2.coordinate.y >= 550:
-                    tank_2.coordinate.y = 550 - 20
-                if tank_2.coordinate.y <= 75:
-                    tank_2.coordinate.y = 75 + 20
+                if (tank_2.is_colliding(brick_left_1.coordinate, brick_left_1.dimension) 
+                    or tank_2.is_colliding(brick_left_2.coordinate, brick_left_2.dimension) 
+                    or tank_2.is_colliding(brick_left_3.coordinate, brick_left_3.dimension)
+                    or tank_2.is_colliding(brick_right_1.coordinate, brick_right_1.dimension)
+                    or tank_2.is_colliding(brick_right_2.coordinate, brick_right_2.dimension)
+                    or tank_2.is_colliding(brick_right_3.coordinate, brick_right_3.dimension)
+                    or tank_2.is_colliding(brick_center_1.coordinate, brick_center_1.dimension)
+                    or tank_2.is_colliding(brick_center_2.coordinate, brick_center_2.dimension)
+                    or tank_2.is_colliding(brick_center_3.coordinate, brick_center_3.dimension)
+                    or tank_2.is_colliding(brick_center_4.coordinate, brick_center_4.dimension)
+                ):
+                    tank_2.coordinate.x += 1.1
+                    tank_2.coordinate.y -= 1.1
+                else:
+                    tank_2.move_up()
+                    if tank_2.coordinate.y >= 550:
+                        tank_2.coordinate.y = 550 - 20
+                    if tank_2.coordinate.y <= 75:
+                        tank_2.coordinate.y = 75 + 20
 
-                if tank_2.coordinate.x <= 20:
-                    tank_2.coordinate.x = 20 + 20
-                if tank_2.coordinate.x >= 750:
-                    tank_2.coordinate.x = 750 - 20
+                    if tank_2.coordinate.x <= 20:
+                        tank_2.coordinate.x = 20 + 20
+                    if tank_2.coordinate.x >= 750:
+                        tank_2.coordinate.x = 750 - 20
 
             if keys[pygame.K_LEFT]:
                 tank_2.rotate(45)

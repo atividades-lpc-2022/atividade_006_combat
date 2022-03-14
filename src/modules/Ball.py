@@ -71,7 +71,7 @@ class Ball:
                 self.x_velocity = 0
                 self.y_velocity *= -1
 
-    def tank_colision(self, coordinate: Coordinate, dimension: Dimension) -> bool:
+    def is_colliding(self, coordinate: Coordinate, dimension: Dimension) -> bool:
         x_colision = coordinate.x <= self.coordinate.x <= coordinate.x + dimension.width
         y_colision = coordinate.y <= self.coordinate.y <= coordinate.y + dimension.height
         return x_colision and y_colision

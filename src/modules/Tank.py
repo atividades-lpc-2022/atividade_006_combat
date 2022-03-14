@@ -4,6 +4,7 @@ from typing import Sequence
 import pygame
 from config import Config
 from modules.Ball import Ball
+from modules.Brick import Brick
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
 from modules.Screen import Screen
@@ -87,6 +88,15 @@ class Tank(pygame.sprite.Sprite):
 
         self.coordinate.x += 1 * self.x_velocity
         self.coordinate.y += 1 * self.y_velocity
+
+    def is_colliding(self, coordinate: Coordinate, dimension: Dimension) -> bool:
+        x_colision = coordinate.x <= self.coordinate.x <= coordinate.x + dimension.width
+        y_colision = coordinate.y <= self.coordinate.y <= coordinate.y + dimension.height
+        
+        x_final_colision = coordinate.x <= self.coordinate.x + self.dimension.width <= coordinate.x + dimension.width
+        y_final_colision = coordinate.y <= self.coordinate.y + self.dimension.height <= coordinate.y + dimension.height
+        
+        return (x_colision and y_colision) or (x_final_colision and y_final_colision) or (x_colision and y_final_colision) or (x_final_colision and y_colision)
 
     def fire(self) -> Ball:
         ball_coordinate = Coordinate(self.coordinate.x + self.dimension.width / 2, self.coordinate.y + self.dimension.height / 2) 
