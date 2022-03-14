@@ -108,8 +108,10 @@ class Game:
                 tank_1.move_up()
             if keys[pygame.K_a]:
                 tank_1.rotate(-45)
+                pygame.time.wait(60)
             if keys[pygame.K_d]:
                 tank_1.rotate(45)
+                pygame.time.wait(60)
 
             # Tank 2's movement
             keys = pygame.key.get_pressed()
@@ -117,8 +119,10 @@ class Game:
                 tank_2.move_up()
             if keys[pygame.K_LEFT]:
                 tank_2.rotate(45)
+                pygame.time.wait(60)
             if keys[pygame.K_RIGHT]:
                 tank_2.rotate(-45)
+                pygame.time.wait(60)
 
             pygame.display.update()
             clock.tick(60)
