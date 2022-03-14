@@ -93,11 +93,13 @@ class Game:
                     if ball.player == 1:
                         self.player_1_score.increment()
                         balls.remove(ball)
+                        tank_2.change_position()
 
                 if ball.tank_colision(tank_1.coordinate, tank_1.dimension):
                     if ball.player == 2:
                         self.player_2_score.increment()
                         balls.remove(ball)
+                        tank_1.change_position()
 
                 ball.draw(screen)
 
