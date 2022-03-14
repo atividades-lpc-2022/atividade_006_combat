@@ -73,10 +73,6 @@ class Game:
         while self.is_running:
             self.use_global_events()
 
-            if((self.player_1_score.points == Config.MAX_PLAYER_POINTS) 
-                or self.player_2_score.points == Config.MAX_PLAYER_POINTS):
-                self.is_running = False
-
             screen.draw()
             tank_1.draw(screen)
             tank_2.draw(screen)
@@ -104,6 +100,20 @@ class Game:
                         self.player_2_score.increment()
                         balls.remove(ball)
                         tank_1.change_position()
+
+                if (ball.is_colliding(brick_left_1.coordinate, brick_left_1.dimension) 
+                    or ball.is_colliding(brick_left_2.coordinate, brick_left_2.dimension) 
+                    or ball.is_colliding(brick_left_3.coordinate, brick_left_3.dimension)
+                    or ball.is_colliding(brick_right_1.coordinate, brick_right_1.dimension)
+                    or ball.is_colliding(brick_right_2.coordinate, brick_right_2.dimension)
+                    or ball.is_colliding(brick_right_3.coordinate, brick_right_3.dimension)
+                    or ball.is_colliding(brick_center_1.coordinate, brick_center_1.dimension)
+                    or ball.is_colliding(brick_center_2.coordinate, brick_center_2.dimension)
+                    or ball.is_colliding(brick_center_3.coordinate, brick_center_3.dimension)
+                    or ball.is_colliding(brick_center_4.coordinate, brick_center_4.dimension)
+                ):
+                    ball.y_velocity = -1
+                    ball.x_velocity = -1
 
                 ball.draw(screen)
 
