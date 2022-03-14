@@ -111,12 +111,15 @@ class Game:
             if keys[pygame.K_w]:
                 tank_1.move_up()
             if keys[pygame.K_a]:
-                tank_1.rotate(-45)
-            if keys[pygame.K_d]:
                 tank_1.rotate(45)
+                pygame.time.delay(60)
+            if keys[pygame.K_d]:
+                tank_1.rotate(-45)
+                pygame.time.delay(60)
             if keys[pygame.K_f]:
                 ball = tank_1.fire(1)
                 balls.append(ball)
+                pygame.time.delay(30)
 
 
             # Tank 2's movement
@@ -125,11 +128,14 @@ class Game:
                 tank_2.move_up()
             if keys[pygame.K_LEFT]:
                 tank_2.rotate(45)
+                pygame.time.delay(60)
             if keys[pygame.K_RIGHT]:
                 tank_2.rotate(-45)
+                pygame.time.delay(60)
             if keys[pygame.K_SPACE]:
                 ball = tank_2.fire(2)
                 balls.append(ball)
+                pygame.time.delay(30)
 
             pygame.display.update()
             clock.tick(60)
