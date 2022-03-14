@@ -38,6 +38,10 @@ class Game:
         # Initializze pygame inside game loop
         pygame.init()
 
+        # Initialize mixer
+        pygame.mixer.init()
+        shot = pygame.mixer.Sound("src/sounds/shot.wav")
+
         # Create screen
         screen = Screen(Dimension(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT))
         pygame.display.set_caption("TANK PONG")
@@ -88,6 +92,17 @@ class Game:
             for ball in balls:
                 if ball.hits == Config.MAX_BALL_HITS:
                     balls.remove(ball)
+
+                if ball.tank_colision(tank_2.coordinate, tank_2.dimension):
+                    if ball.player == 1:
+                        self.player_1_score += 1
+                        balls.remove(ball)
+
+                if ball.tank_colision(tank_1.coordinate, tank_1.dimension):
+                    if ball.player == 2:
+                        self.player_2_score += 1
+                        balls.remove(ball)
+
                 ball.draw(screen)
 
             brick_center_1.draw(screen)
@@ -128,7 +143,8 @@ class Game:
             if keys[pygame.K_f]:
                 ball = tank_1.fire(1)
                 balls.append(ball)
-                pygame.time.delay(30)
+                pygame.time.delay(100)
+                shot.play()
 
 
             # Tank 2's movement
@@ -154,7 +170,9 @@ class Game:
             if keys[pygame.K_SPACE]:
                 ball = tank_2.fire(2)
                 balls.append(ball)
-                pygame.time.delay(30)
+                pygame.time.delay(100)
+                shot.play()
+
 
             pygame.display.update()
             clock.tick(60)

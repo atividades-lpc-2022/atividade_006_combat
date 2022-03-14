@@ -17,6 +17,7 @@ class Ball:
         self.y_velocity = 1.0  # ball velocity
         self.init_velocity()
 
+
     def init_velocity(self):
         if self.angle == 0.0 or self.angle == 360:
             self.x_velocity = 0
@@ -70,9 +71,88 @@ class Ball:
                 self.x_velocity = 0
                 self.y_velocity *= -1
 
+    def tank_colision(self, coordinate: Coordinate, dimension: Dimension) -> bool:
+        b_coordinate = coordinate
+
+        x_colision = self.coordinate.x <= b_coordinate.x <= self.coordinate.x + self.dimension.width
+        y_colision = self.coordinate.y <= b_coordinate.y <= self.coordinate.y + self.dimension.height
+
+        return x_colision and y_colision
+            
+
     def draw(self, screen: Screen):  # TODO: Fires at a coordinate
+        from pygame import mixer
+        mixer.init()
+
+        colision_1 = pygame.mixer.Sound("src/sounds/Ball_to_wall/ball_wall1.wav")
+        colision_2 = pygame.mixer.Sound("src/sounds/Ball_to_wall/ball_wall2.wav")
+        colision_3 = pygame.mixer.Sound("src/sounds/Ball_to_wall/ball_wall3.wav")
+        colision_4 = pygame.mixer.Sound("src/sounds/Ball_to_wall/ball_wall4.wav")
+        colision_5 = pygame.mixer.Sound("src/sounds/Ball_to_wall/ball_wall5.wav")
+
         self.coordinate.x += Config.BALL_DRAW_VELOCITY * self.x_velocity
         self.coordinate.y += Config.BALL_DRAW_VELOCITY * self.y_velocity
         pygame.draw.rect(screen.surface, Config.COLORS["BLACK"], (self.coordinate.x, self.coordinate.y, self.dimension.width, self.dimension.height))
 
-            
+        if self.coordinate.y >= 572:
+            self.y_velocity *= -1
+            self.hits += 1
+
+            if self.hits == 1:
+                colision_1.play()
+            if self.hits == 2:
+                colision_2.play()
+            if self.hits == 3:
+                colision_3.play()
+            if self.hits == 4:
+                colision_4.play()
+            if self.hits == 5:
+                colision_5.play()
+
+        if self.coordinate.y <= 75:
+            self.y_velocity *= -1
+            self.hits += 1
+
+            if self.hits == 1:
+                colision_1.play()
+            if self.hits == 2:
+                colision_2.play()
+            if self.hits == 3:
+                colision_3.play()
+            if self.hits == 4:
+                colision_4.play()
+            if self.hits == 5:
+                colision_5.play()
+
+        if self.coordinate.x <= 20:
+            self.x_velocity *= -1
+            self.hits += 1
+
+            if self.hits == 1:
+                colision_1.play()
+            if self.hits == 2:
+                colision_2.play()
+            if self.hits == 3:
+                colision_3.play()
+            if self.hits == 4:
+                colision_4.play()
+            if self.hits == 5:
+                colision_5.play()
+
+        if self.coordinate.x >= 772:
+            self.x_velocity *= -1
+            self.hits += 1
+
+            if self.hits == 1:
+                colision_1.play()
+            if self.hits == 2:
+                colision_2.play()
+            if self.hits == 3:
+                colision_3.play()
+            if self.hits == 4:
+                colision_4.play()
+            if self.hits == 5:
+                colision_5.play()
+
+        
+
