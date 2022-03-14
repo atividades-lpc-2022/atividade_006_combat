@@ -105,11 +105,20 @@ class Game:
 
             bound(screen.surface, color=(Config.COLORS["T_ORANGE"]))
 
-            # Rotations
             # Tank 1's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_w]:
                 tank_1.move_up()
+                if tank_1.coordinate.y >= 550:
+                    tank_1.coordinate.y = 550 - 20
+                if tank_1.coordinate.y <= 75:
+                    tank_1.coordinate.y = 75 + 20
+
+                if tank_1.coordinate.x <= 20:
+                    tank_1.coordinate.x = 20 + 20
+                if tank_1.coordinate.x >= 750:
+                    tank_1.coordinate.x = 750 - 20
+
             if keys[pygame.K_a]:
                 tank_1.rotate(45)
                 pygame.time.delay(60)
@@ -126,6 +135,16 @@ class Game:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
                 tank_2.move_up()
+                if tank_2.coordinate.y >= 550:
+                    tank_2.coordinate.y = 550 - 20
+                if tank_2.coordinate.y <= 75:
+                    tank_2.coordinate.y = 75 + 20
+
+                if tank_2.coordinate.x <= 20:
+                    tank_2.coordinate.x = 20 + 20
+                if tank_2.coordinate.x >= 750:
+                    tank_2.coordinate.x = 750 - 20
+
             if keys[pygame.K_LEFT]:
                 tank_2.rotate(45)
                 pygame.time.delay(60)
