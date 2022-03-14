@@ -72,13 +72,9 @@ class Ball:
                 self.y_velocity *= -1
 
     def tank_colision(self, coordinate: Coordinate, dimension: Dimension) -> bool:
-        b_coordinate = coordinate
-
-        x_colision = self.coordinate.x <= b_coordinate.x <= self.coordinate.x + self.dimension.width
-        y_colision = self.coordinate.y <= b_coordinate.y <= self.coordinate.y + self.dimension.height
-
+        x_colision = coordinate.x <= self.coordinate.x <= coordinate.x + dimension.width
+        y_colision = coordinate.y <= self.coordinate.y <= coordinate.y + dimension.height
         return x_colision and y_colision
-            
 
     def draw(self, screen: Screen):  # TODO: Fires at a coordinate
         from pygame import mixer

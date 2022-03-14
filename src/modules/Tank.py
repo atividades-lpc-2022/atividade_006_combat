@@ -22,7 +22,8 @@ BRICK_POSITIONS = [
 ]
 
 class Tank(pygame.sprite.Sprite):
-    def __init__(self, coordinate: Coordinate, sprite_path: str):
+
+    def __init__(self, coordinate: Coordinate, sprite_path: str, player: int):
 
         super(Tank, self).__init__()
         self.coordinate = coordinate
@@ -35,6 +36,7 @@ class Tank(pygame.sprite.Sprite):
         self.x_velocity = 1.0  # Default tank velocity
         self.y_velocity = 1.0  # Default tank velocity
         self.current_angle = 0.0  # Default tank angle
+        self.player = player
 
     def rotate(self, angle: float = 45):  # Set a new angle
         if self.current_angle + angle >= 360: 
@@ -86,10 +88,10 @@ class Tank(pygame.sprite.Sprite):
         self.coordinate.x += 1 * self.x_velocity
         self.coordinate.y += 1 * self.y_velocity
 
-    def fire(self, player_id: int) -> Ball:
+    def fire(self) -> Ball:
         ball_coordinate = Coordinate(self.coordinate.x + self.dimension.width / 2, self.coordinate.y + self.dimension.height / 2) 
         ball_dimension = Dimension(5, 5) 
-        return Ball(ball_coordinate, ball_dimension, self.current_angle, player_id)
+        return Ball(ball_coordinate, ball_dimension, self.current_angle, self.player)
 
     def draw(self, screen: Screen):  # TODO: Draw a tank
         screen.surface.blit(pygame.transform.rotate(self.image, self.current_angle), (self.coordinate.x, self.coordinate.y))

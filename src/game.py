@@ -50,12 +50,8 @@ class Game:
         balls: Sequence[Ball] = []
 
         # Players
-        tank_1 = Tank(
-            Coordinate(70, 325), sprite_path=(Config.SPRITES_PATH["PLAYER_1"])
-            )
-        tank_2 = Tank(
-            Coordinate(730, 325), sprite_path=(Config.SPRITES_PATH["PLAYER_2"])
-        )
+        tank_1 = Tank(Coordinate(70, 325), Config.SPRITES_PATH["PLAYER_1"], 1)
+        tank_2 = Tank(Coordinate(730, 325), Config.SPRITES_PATH["PLAYER_2"], 2)
 
         # HUD
         hud = HUD()
@@ -95,12 +91,12 @@ class Game:
 
                 if ball.tank_colision(tank_2.coordinate, tank_2.dimension):
                     if ball.player == 1:
-                        self.player_1_score += 1
+                        self.player_1_score.increment()
                         balls.remove(ball)
 
                 if ball.tank_colision(tank_1.coordinate, tank_1.dimension):
                     if ball.player == 2:
-                        self.player_2_score += 1
+                        self.player_2_score.increment()
                         balls.remove(ball)
 
                 ball.draw(screen)
@@ -141,10 +137,14 @@ class Game:
                 tank_1.rotate(-45)
                 pygame.time.delay(60)
             if keys[pygame.K_f]:
-                ball = tank_1.fire(1)
-                balls.append(ball)
-                pygame.time.delay(100)
-                shot.play()
+                has_ball = False
+                for ball in balls:
+                    if ball.player == 1:
+                        has_ball = True
+                if not has_ball:
+                    new_ball = tank_1.fire()
+                    balls.append(new_ball)
+                    shot.play()
 
 
             # Tank 2's movement
@@ -168,11 +168,14 @@ class Game:
                 tank_2.rotate(-45)
                 pygame.time.delay(60)
             if keys[pygame.K_SPACE]:
-                ball = tank_2.fire(2)
-                balls.append(ball)
-                pygame.time.delay(100)
-                shot.play()
-
+                has_ball = False
+                for ball in balls:
+                    if ball.player == 2:
+                        has_ball = True
+                if not has_ball:
+                    new_ball = tank_2.fire()
+                    balls.append(new_ball)
+                    shot.play()
 
             pygame.display.update()
             clock.tick(60)
