@@ -24,19 +24,26 @@ class Tank(pygame.sprite.Sprite):
     def __init__(self, coordinate: Coordinate, sprite_path: str):
 
         super(Tank, self).__init__()
+        self.coordinate = coordinate
         self.image = pygame.image.load(sprite_path)
         self.rect = self.image.get_rect()
-        self.coordinate = coordinate
+        self.rect.center = (self.coordinate.x, self.coordinate.y)
         self.dimension = Dimension(self.rect.width, self.rect.height)
         self.range_allowed_x = list(range(21, Config.SCREEN_WIDTH - self.dimension.width + 1))
         self.range_allowed_y = list(range(76, Config.SCREEN_HEIGHT - self.dimension.height + 1))
-        self.velocity = 1.0  # Default tank velocity
-        self.angle = 0  # Default tank angle
+        self.x_velocity = 1.0  # Default tank velocity
+        self.y_velocity = 1.0  # Default tank velocity
+        self.current_angle = 0.0  # Default tank angle
 
-    def rotate(self, new_angle: float):  # Set a new angle 
-        self.image = pygame.transform.rotate(self.image, new_angle)
-        rot_rect = self.image.get_rect(center=(self.rect.center))
-        
+    def rotate(self, angle: float = 45):  # Set a new angle
+        if self.current_angle + angle >= 360: 
+            self.current_angle = 0
+            return
+        if self.current_angle + angle < 0:
+            self.current_angle = 360 + (self.current_angle + angle)
+        else:
+            self.current_angle += angle
+
     def change_position(self): # TODO: Add tank collision with the ball to undo this comment
         new_x = choice(self.range_allowed_x)
         new_y = choice(self.range_allowed_y)
@@ -49,10 +56,34 @@ class Tank(pygame.sprite.Sprite):
         self.coordinate.x = new_x
         self.coordinate.y = new_y
 
-    def use_controls(self):  # TODO: Define tank controls
-        print("Setting tank controls...")
+    def move_up(self):
+        if self.current_angle == 0.0 or self.current_angle == 360:
+            self.x_velocity = 0
+            self.y_velocity = -1
+        elif self.current_angle == 45:
+            self.y_velocity = -1
+            self.x_velocity = -1
+        elif self.current_angle == 90:
+            self.x_velocity = -1
+            self.y_velocity = 0
+        elif self.current_angle == 135:
+            self.x_velocity = -1
+            self.y_velocity = 1
+        elif self.current_angle == 180:
+            self.x_velocity = 0
+            self.y_velocity = 1
+        elif self.current_angle == 225:
+            self.x_velocity = 1
+            self.y_velocity = 1
+        elif self.current_angle == 270:
+            self.x_velocity = 1
+            self.y_velocity = 0
+        elif self.current_angle == 315:
+            self.x_velocity = 1
+            self.y_velocity = -1
+
+        self.coordinate.x += 1 * self.x_velocity
+        self.coordinate.y += 1 * self.y_velocity
 
     def draw(self, screen: Screen):  # TODO: Draw a tank
-        self.rect.center = (self.coordinate.x, self.coordinate.y)
-        self.use_controls()
-        screen.surface.blit(self.image, self.rect)
+        screen.surface.blit(pygame.transform.rotate(self.image, self.current_angle), (self.coordinate.x, self.coordinate.y))

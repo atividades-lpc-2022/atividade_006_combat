@@ -105,25 +105,20 @@ class Game:
             # Tank 1's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_w]:
-                tank_1.coordinate.y -= 1.0
+                tank_1.move_up()
             if keys[pygame.K_a]:
-                tank_1.coordinate.y -= 1.0 - 2.0
+                tank_1.rotate(-45)
             if keys[pygame.K_d]:
-                tank_1.coordinate.x += 1
+                tank_1.rotate(45)
 
             # Tank 2's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
-                tank_2.coordinate.y -= 1.0
-            if keys[pygame.K_DOWN]:
-                tank_2.coordinate.y -= 1.0 - 2.0
+                tank_2.move_up()
             if keys[pygame.K_LEFT]:
-                tank_2.coordinate.x -= 1
-
-
-                
-
-            
+                tank_2.rotate(45)
+            if keys[pygame.K_RIGHT]:
+                tank_2.rotate(-45)
 
             pygame.display.update()
             clock.tick(60)
