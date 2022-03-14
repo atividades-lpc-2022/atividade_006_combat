@@ -73,6 +73,10 @@ class Game:
         while self.is_running:
             self.use_global_events()
 
+            if((self.player_1_score.points == Config.MAX_PLAYER_POINTS) 
+                or self.player_2_score.points == Config.MAX_PLAYER_POINTS):
+                self.is_running = False
+
             screen.draw()
             tank_1.draw(screen)
             tank_2.draw(screen)
