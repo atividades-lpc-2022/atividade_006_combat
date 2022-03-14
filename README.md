@@ -21,9 +21,21 @@ Repositório referente a atividade 6 de LPC: Combat.
 
 # Mecânicas
 - Bola rebate nos obstáculos
-- Pontua quando bola colide com o tanque adversário
+- Pontua quando bola colide com o tanque adversário (após 1 hit)
 - Colisão do tanque com os obstáculos
 - Quando tanque atingido, jogador dar _spawn_ em um lugar aleatório do mapa 
-- Quando um jogador atingir X pontos, jogo passa para a próxima fase.
 - Quando objeto colide com um obstáculo, verifica-se a posição da bola em relação ao obstáculo para calcular sua angulação.
-- Cores do _background_ e cores dos jogadores mudam a cada fase.
+
+# Etapa Final
+
+- Rotação do tanque (Gabriel)
+- Criação da bola (Manuela, Gabriel)
+- Colisões
+  - Tanque-Tijolos (Cibelle)
+  - Tanque-Bordas (Cibelle)
+  - Bola-Tanque (Arthur)
+  - Bola-Bordas (Arthur)
+  - Bola-Tijolos (Arthur)
+  - Tanque-Tanque (Arthur, Cibelle)
+- Pontuação dos jogadores (Arthur)
+- Jogador deve nascer em um lugar aleatório quando for atingido (Gabriel)
