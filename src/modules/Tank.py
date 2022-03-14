@@ -3,6 +3,7 @@ from secrets import choice
 from typing import Sequence
 import pygame
 from config import Config
+from modules.Ball import Ball
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
 from modules.Screen import Screen
@@ -84,6 +85,11 @@ class Tank(pygame.sprite.Sprite):
 
         self.coordinate.x += 1 * self.x_velocity
         self.coordinate.y += 1 * self.y_velocity
+
+    def fire(self, player_id: int) -> Ball:
+        ball_coordinate = Coordinate(self.coordinate.x + self.dimension.width / 2, self.coordinate.y + self.dimension.height / 2) 
+        ball_dimension = Dimension(5, 5) 
+        return Ball(ball_coordinate, ball_dimension, self.current_angle, player_id)
 
     def draw(self, screen: Screen):  # TODO: Draw a tank
         screen.surface.blit(pygame.transform.rotate(self.image, self.current_angle), (self.coordinate.x, self.coordinate.y))

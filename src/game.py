@@ -1,3 +1,4 @@
+from typing import Sequence
 import pygame
 from modules.Brick import Brick
 from modules.Coordinate import Coordinate
@@ -42,8 +43,7 @@ class Game:
         pygame.display.set_caption("TANK PONG")
         clock = pygame.time.Clock()
 
-        # Ball
-        # ball_1 = Ball(Coordinate(300,300), Config.COLORS["BLACK"])
+        balls: Sequence[Ball] = []
 
         # Players
         tank_1 = Tank(
@@ -56,7 +56,6 @@ class Game:
         # HUD
         hud = HUD()
         
-
         # Bricks
         brick_center_1 = Brick(Coordinate(400, 180), Dimension(35, 80), Config.COLORS["T_ORANGE"])
         brick_center_2 = Brick(Coordinate(400, 475), Dimension(35, 80), Config.COLORS["T_ORANGE"])
@@ -86,6 +85,11 @@ class Game:
                 Config.COLORS["BLUE"],
             )
 
+            for ball in balls:
+                if ball.hits == Config.MAX_BALL_HITS:
+                    balls.remove(ball)
+                ball.draw(screen)
+
             brick_center_1.draw(screen)
             brick_center_2.draw(screen)
             brick_center_3.draw(screen)
@@ -110,6 +114,10 @@ class Game:
                 tank_1.rotate(-45)
             if keys[pygame.K_d]:
                 tank_1.rotate(45)
+            if keys[pygame.K_f]:
+                ball = tank_1.fire(1)
+                balls.append(ball)
+
 
             # Tank 2's movement
             keys = pygame.key.get_pressed()
@@ -119,6 +127,9 @@ class Game:
                 tank_2.rotate(45)
             if keys[pygame.K_RIGHT]:
                 tank_2.rotate(-45)
+            if keys[pygame.K_SPACE]:
+                ball = tank_2.fire(2)
+                balls.append(ball)
 
             pygame.display.update()
             clock.tick(60)

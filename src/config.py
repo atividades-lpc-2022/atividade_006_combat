@@ -6,7 +6,8 @@ class Config:
     SCREEN_HEIGHT = 600
     CURRENT_LEVEL = 1
     MAX_PLAYER_POINTS = 4
-    MAX_BALL_HITS = 4
+    MAX_BALL_HITS = 5
+    BALL_DRAW_VELOCITY = 8
     FONT_SIZE = 32
     FONT_PATH = "src/fonts/PressStart2P.ttf"
 
