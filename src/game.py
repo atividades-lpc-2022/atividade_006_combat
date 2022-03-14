@@ -50,25 +50,61 @@ class Game:
         balls: Sequence[Ball] = []
 
         # Players
-        tank_1 = Tank(Coordinate(Config.SCREEN_WIDTH * (0.1), 320), Config.SPRITES_PATH["PLAYER_1"], 1)
-        tank_2 = Tank(Coordinate(Config.SCREEN_WIDTH * (0.9), 320), Config.SPRITES_PATH["PLAYER_2"], 2)
+        tank_1 = Tank(
+            Coordinate(Config.SCREEN_WIDTH * (0.1), 320),
+            Config.SPRITES_PATH["PLAYER_1"],
+            1,
+        )
+        tank_2 = Tank(
+            Coordinate(Config.SCREEN_WIDTH * (0.9), 320),
+            Config.SPRITES_PATH["PLAYER_2"],
+            2,
+        )
 
         # HUD
         hud = HUD()
-        
+
         # Bricks
-        brick_center_1 = Brick(Coordinate(Config.SCREEN_WIDTH / 2 - 17.5, 180), Dimension(35, 80), Config.COLORS["T_ORANGE"])
-        brick_center_2 = Brick(Coordinate(Config.SCREEN_WIDTH / 2 - 17.5, 425), Dimension(35, 80), Config.COLORS["T_ORANGE"])
-        brick_center_3 = Brick(Coordinate(Config.SCREEN_WIDTH * (0.4) - 80, 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
-        brick_center_4 = Brick(Coordinate(Config.SCREEN_WIDTH * (0.6), 325), Dimension(80, 30), Config.COLORS["T_ORANGE"])
+        brick_center_1 = Brick(
+            Coordinate(Config.SCREEN_WIDTH / 2 - 17.5, 180),
+            Dimension(35, 80),
+            Config.COLORS["T_ORANGE"],
+        )
+        brick_center_2 = Brick(
+            Coordinate(Config.SCREEN_WIDTH / 2 - 17.5, 425),
+            Dimension(35, 80),
+            Config.COLORS["T_ORANGE"],
+        )
+        brick_center_3 = Brick(
+            Coordinate(Config.SCREEN_WIDTH * (0.4) - 80, 325),
+            Dimension(80, 30),
+            Config.COLORS["T_ORANGE"],
+        )
+        brick_center_4 = Brick(
+            Coordinate(Config.SCREEN_WIDTH * (0.6), 325),
+            Dimension(80, 30),
+            Config.COLORS["T_ORANGE"],
+        )
 
-        brick_left_1 = Brick(Coordinate(120, 270), Dimension(17, 110), Config.COLORS["T_ORANGE"])
-        brick_left_2 = Brick(Coordinate(103, 253), Dimension(34, 17), Config.COLORS["T_ORANGE"])
-        brick_left_3 = Brick(Coordinate(103, 380), Dimension(34, 17), Config.COLORS["T_ORANGE"])
+        brick_left_1 = Brick(
+            Coordinate(120, 270), Dimension(17, 110), Config.COLORS["T_ORANGE"]
+        )
+        brick_left_2 = Brick(
+            Coordinate(103, 253), Dimension(34, 17), Config.COLORS["T_ORANGE"]
+        )
+        brick_left_3 = Brick(
+            Coordinate(103, 380), Dimension(34, 17), Config.COLORS["T_ORANGE"]
+        )
 
-        brick_right_1 = Brick(Coordinate(680, 270), Dimension(17, 110), Config.COLORS["T_ORANGE"])
-        brick_right_2 = Brick(Coordinate(680, 253), Dimension(34, 17), Config.COLORS["T_ORANGE"])
-        brick_right_3 = Brick(Coordinate(680, 380), Dimension(34, 17), Config.COLORS["T_ORANGE"])
+        brick_right_1 = Brick(
+            Coordinate(680, 270), Dimension(17, 110), Config.COLORS["T_ORANGE"]
+        )
+        brick_right_2 = Brick(
+            Coordinate(680, 253), Dimension(34, 17), Config.COLORS["T_ORANGE"]
+        )
+        brick_right_3 = Brick(
+            Coordinate(680, 380), Dimension(34, 17), Config.COLORS["T_ORANGE"]
+        )
 
         while self.is_running:
             self.use_global_events()
@@ -101,16 +137,35 @@ class Game:
                         balls.remove(ball)
                         tank_1.change_position()
 
-                if (ball.is_colliding(brick_left_1.coordinate, brick_left_1.dimension) 
-                    or ball.is_colliding(brick_left_2.coordinate, brick_left_2.dimension) 
-                    or ball.is_colliding(brick_left_3.coordinate, brick_left_3.dimension)
-                    or ball.is_colliding(brick_right_1.coordinate, brick_right_1.dimension)
-                    or ball.is_colliding(brick_right_2.coordinate, brick_right_2.dimension)
-                    or ball.is_colliding(brick_right_3.coordinate, brick_right_3.dimension)
-                    or ball.is_colliding(brick_center_1.coordinate, brick_center_1.dimension)
-                    or ball.is_colliding(brick_center_2.coordinate, brick_center_2.dimension)
-                    or ball.is_colliding(brick_center_3.coordinate, brick_center_3.dimension)
-                    or ball.is_colliding(brick_center_4.coordinate, brick_center_4.dimension)
+                if (
+                    ball.is_colliding(brick_left_1.coordinate, brick_left_1.dimension)
+                    or ball.is_colliding(
+                        brick_left_2.coordinate, brick_left_2.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_left_3.coordinate, brick_left_3.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_right_1.coordinate, brick_right_1.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_right_2.coordinate, brick_right_2.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_right_3.coordinate, brick_right_3.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_center_1.coordinate, brick_center_1.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_center_2.coordinate, brick_center_2.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_center_3.coordinate, brick_center_3.dimension
+                    )
+                    or ball.is_colliding(
+                        brick_center_4.coordinate, brick_center_4.dimension
+                    )
                 ):
                     ball.y_velocity = -1
                     ball.x_velocity = -1
@@ -135,16 +190,35 @@ class Game:
             # Tank 1's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_w]:
-                if (tank_1.is_colliding(brick_left_1.coordinate, brick_left_1.dimension) 
-                    or tank_1.is_colliding(brick_left_2.coordinate, brick_left_2.dimension) 
-                    or tank_1.is_colliding(brick_left_3.coordinate, brick_left_3.dimension)
-                    or tank_1.is_colliding(brick_right_1.coordinate, brick_right_1.dimension)
-                    or tank_1.is_colliding(brick_right_2.coordinate, brick_right_2.dimension)
-                    or tank_1.is_colliding(brick_right_3.coordinate, brick_right_3.dimension)
-                    or tank_1.is_colliding(brick_center_1.coordinate, brick_center_1.dimension)
-                    or tank_1.is_colliding(brick_center_2.coordinate, brick_center_2.dimension)
-                    or tank_1.is_colliding(brick_center_3.coordinate, brick_center_3.dimension)
-                    or tank_1.is_colliding(brick_center_4.coordinate, brick_center_4.dimension)
+                if (
+                    tank_1.is_colliding(brick_left_1.coordinate, brick_left_1.dimension)
+                    or tank_1.is_colliding(
+                        brick_left_2.coordinate, brick_left_2.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_left_3.coordinate, brick_left_3.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_right_1.coordinate, brick_right_1.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_right_2.coordinate, brick_right_2.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_right_3.coordinate, brick_right_3.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_center_1.coordinate, brick_center_1.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_center_2.coordinate, brick_center_2.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_center_3.coordinate, brick_center_3.dimension
+                    )
+                    or tank_1.is_colliding(
+                        brick_center_4.coordinate, brick_center_4.dimension
+                    )
                 ):
                     tank_1.coordinate.x -= 1.1
                     tank_1.coordinate.y -= 1.1
@@ -176,20 +250,38 @@ class Game:
                     balls.append(new_ball)
                     shot.play()
 
-
             # Tank 2's movement
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
-                if (tank_2.is_colliding(brick_left_1.coordinate, brick_left_1.dimension) 
-                    or tank_2.is_colliding(brick_left_2.coordinate, brick_left_2.dimension) 
-                    or tank_2.is_colliding(brick_left_3.coordinate, brick_left_3.dimension)
-                    or tank_2.is_colliding(brick_right_1.coordinate, brick_right_1.dimension)
-                    or tank_2.is_colliding(brick_right_2.coordinate, brick_right_2.dimension)
-                    or tank_2.is_colliding(brick_right_3.coordinate, brick_right_3.dimension)
-                    or tank_2.is_colliding(brick_center_1.coordinate, brick_center_1.dimension)
-                    or tank_2.is_colliding(brick_center_2.coordinate, brick_center_2.dimension)
-                    or tank_2.is_colliding(brick_center_3.coordinate, brick_center_3.dimension)
-                    or tank_2.is_colliding(brick_center_4.coordinate, brick_center_4.dimension)
+                if (
+                    tank_2.is_colliding(brick_left_1.coordinate, brick_left_1.dimension)
+                    or tank_2.is_colliding(
+                        brick_left_2.coordinate, brick_left_2.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_left_3.coordinate, brick_left_3.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_right_1.coordinate, brick_right_1.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_right_2.coordinate, brick_right_2.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_right_3.coordinate, brick_right_3.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_center_1.coordinate, brick_center_1.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_center_2.coordinate, brick_center_2.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_center_3.coordinate, brick_center_3.dimension
+                    )
+                    or tank_2.is_colliding(
+                        brick_center_4.coordinate, brick_center_4.dimension
+                    )
                 ):
                     tank_2.coordinate.x += 1.1
                     tank_2.coordinate.y -= 1.1

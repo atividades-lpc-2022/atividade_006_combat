@@ -12,4 +12,13 @@ class Brick:
         self.rect = None
 
     def draw(self, screen: Screen):
-        self.rect = pygame.draw.rect(screen.surface, self.color, (self.coordinate.x, self.coordinate.y, self.dimension.width, self.dimension.height))
+        self.rect = pygame.draw.rect(
+            screen.surface,
+            self.color,
+            (
+                self.coordinate.x,
+                self.coordinate.y,
+                self.dimension.width,
+                self.dimension.height,
+            ),
+        )

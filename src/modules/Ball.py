@@ -7,16 +7,17 @@ from modules.Screen import Screen
 
 
 class Ball:
-    def __init__(self, coordinate: Coordinate, dimension: Dimension, angle: float, player: int):
+    def __init__(
+        self, coordinate: Coordinate, dimension: Dimension, angle: float, player: int
+    ):
         self.coordinate = coordinate
         self.dimension = dimension
         self.hits = 0  # number of hits on the wall
-        self.player = player # Who fire the ball
+        self.player = player  # Who fire the ball
         self.angle = angle
         self.x_velocity = 1.0  # ball velocity
         self.y_velocity = 1.0  # ball velocity
         self.init_velocity()
-
 
     def init_velocity(self):
         if self.angle == 0.0 or self.angle == 360:
@@ -44,9 +45,11 @@ class Ball:
             self.x_velocity = 1
             self.y_velocity = -1
 
-    def change_direction(self, brick: Brick): # TODO: Add ball collision with the bricks to undo this comment
+    def change_direction(
+        self, brick: Brick
+    ):  # TODO: Add ball collision with the bricks to undo this comment
         if self.coordinate.x == brick.coordinate.x:
-            percents = (self.coordinate.y - brick.coordinate.y)/ brick.dimension.height
+            percents = (self.coordinate.y - brick.coordinate.y) / brick.dimension.height
 
             if percents > 0.5:
                 self.x_velocity *= -1
@@ -59,7 +62,7 @@ class Ball:
                 self.y_velocity *= -1
 
         elif self.coordinate.y == brick.coordinate.y:
-            percents = (self.coordinate.x - brick.coordinate.x)/ brick.dimension.width
+            percents = (self.coordinate.x - brick.coordinate.x) / brick.dimension.width
 
             if percents > 0.5:
                 self.x_velocity *= -1
@@ -73,11 +76,14 @@ class Ball:
 
     def is_colliding(self, coordinate: Coordinate, dimension: Dimension) -> bool:
         x_colision = coordinate.x <= self.coordinate.x <= coordinate.x + dimension.width
-        y_colision = coordinate.y <= self.coordinate.y <= coordinate.y + dimension.height
+        y_colision = (
+            coordinate.y <= self.coordinate.y <= coordinate.y + dimension.height
+        )
         return x_colision and y_colision
 
     def draw(self, screen: Screen):  # TODO: Fires at a coordinate
         from pygame import mixer
+
         mixer.init()
 
         colision_1 = pygame.mixer.Sound("src/sounds/Ball_to_wall/ball_wall1.wav")
@@ -88,7 +94,16 @@ class Ball:
 
         self.coordinate.x += Config.BALL_DRAW_VELOCITY * self.x_velocity
         self.coordinate.y += Config.BALL_DRAW_VELOCITY * self.y_velocity
-        pygame.draw.rect(screen.surface, Config.COLORS["BLACK"], (self.coordinate.x, self.coordinate.y, self.dimension.width, self.dimension.height))
+        pygame.draw.rect(
+            screen.surface,
+            Config.COLORS["BLACK"],
+            (
+                self.coordinate.x,
+                self.coordinate.y,
+                self.dimension.width,
+                self.dimension.height,
+            ),
+        )
 
         if self.coordinate.y >= 572:
             self.y_velocity *= -1
@@ -149,6 +164,3 @@ class Ball:
                 colision_4.play()
             if self.hits == 5:
                 colision_5.play()
-
-        
-
